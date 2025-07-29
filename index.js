@@ -1,4 +1,4 @@
-import {Client, Collection, IntentsBitField} from 'discord.js';
+import {Client, IntentsBitField} from 'discord.js';
 import dotenv from 'dotenv';
 import {loadCommands} from './loader/commandLoader.js';
 import {loadEvents} from './loader/eventLoader.js';
@@ -17,4 +17,4 @@ const client = new Client({
 await loadCommands(client);
 await loadEvents(client);
 
-client.login(process.env.BOT_TOKEN);
+await client.login(process.env.BOT_TOKEN);
