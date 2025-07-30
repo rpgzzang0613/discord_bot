@@ -38,8 +38,13 @@ export async function handleStartCommand(interaction) {
 
 export async function handleJoinCommand(interaction) {
   if (gameState.status !== 'waiting' || interaction.channel.id !== gameState.channelId) {
+    const msg =
+      gameState.status === 'idle'
+        ? '현재 참여 가능한 게임이 없습니다.'
+        : '참여 가능 시간이 지나 게임이 진행중입니다.';
+
     return interaction.reply({
-      content: '현재 참여 가능한 게임이 없습니다.',
+      content: msg,
       flags: MessageFlags.Ephemeral,
     });
   }
