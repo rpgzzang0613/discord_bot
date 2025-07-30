@@ -4,15 +4,15 @@ import {beginTurnCycle, handleGuess} from './controller.js';
 import {MessageFlags} from 'discord.js';
 
 export async function handleStartCommand(interaction) {
-  if (gameState.isActive) {
+  if (gameState.status === 'waiting' || gameState.status === 'playing') {
     return interaction.reply({
       content: '이미 게임이 진행 중입니다.',
       flags: MessageFlags.Ephemeral,
     });
   }
 
-  gameState.isActive = true;
-  gameState.channelId = interaction.channelId;
+  gameState.status = 'waiting';
+  gameState.channelId = interaction.channel.id;
   gameState.secret = generateSecret();
   gameState.players = [];
   gameState.turnIndex = 0;
@@ -27,6 +27,7 @@ export async function handleStartCommand(interaction) {
       resetGameState();
       await interaction.followUp('참가자가 없어 게임이 취소되었습니다.');
     } else {
+      gameState.status = 'playing';
       await interaction.followUp(
         `참가 마감! 총 ${gameState.players.length}명 참여.\n곧 첫 번째 차례를 시작합니다.`
       );
@@ -36,7 +37,7 @@ export async function handleStartCommand(interaction) {
 }
 
 export async function handleJoinCommand(interaction) {
-  if (!gameState.isActive || interaction.channelId !== gameState.channelId) {
+  if (gameState.status !== 'waiting' || interaction.channel.id !== gameState.channelId) {
     return interaction.reply({
       content: '현재 참여 가능한 게임이 없습니다.',
       flags: MessageFlags.Ephemeral,
@@ -53,7 +54,7 @@ export async function handleJoinCommand(interaction) {
 }
 
 export async function handleGuessCommand(interaction, input) {
-  if (!gameState.isActive || interaction.channelId !== gameState.channelId) {
+  if (gameState.status !== 'playing' || interaction.channel.id !== gameState.channelId) {
     return interaction.reply({
       content: '현재 진행 중인 게임이 없습니다.',
       flags: MessageFlags.Ephemeral,
@@ -72,10 +73,10 @@ export async function handleGuessCommand(interaction, input) {
 }
 
 export async function handleEndCommand(interaction) {
-  const currentChannelId = interaction.channel.id;
-
-  // 게임이 아예 안 열려 있거나, 다른 채널에서 열려 있는 경우
-  if (!gameState.isActive || gameState.channelId !== currentChannelId) {
+  if (
+    (gameState.status !== 'waiting' && gameState.status !== 'playing') ||
+    gameState.channelId !== interaction.channel.id
+  ) {
     return await interaction.reply({
       content: '현재 이 채널에서는 종료할 숫자야구 게임이 없습니다.',
       flags: MessageFlags.Ephemeral,

@@ -1,5 +1,5 @@
 export const gameState = {
-  isActive: false, // 게임이 시작되었는지 여부
+  status: 'idle', // idle, waiting, playing
   channelId: null, // 게임이 열려 있는 채널 ID
   players: [], // 참가자 목록 [{ id, name }]
   secret: null, // 정답 숫자 (문자열, 예: '123')
@@ -10,7 +10,7 @@ export const gameState = {
 };
 
 export function resetGameState() {
-  gameState.isActive = false;
+  gameState.status = 'idle';
   gameState.channelId = null;
   gameState.players = [];
   gameState.secret = null;

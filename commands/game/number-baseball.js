@@ -22,8 +22,6 @@ export const data = new SlashCommandBuilder()
   .addSubcommand(sub => sub.setName('종료').setDescription('숫자야구 게임을 종료합니다.'));
 
 export async function execute(interaction) {
-  console.log(interaction.channelId, 'channelId');
-  console.log(interaction.channel.id, 'channel.id');
   if (interaction.channel.id !== '1399971778767622187') {
     interaction.reply({
       content: '숫자야구가 허용된 채널이 아닙니다.',
