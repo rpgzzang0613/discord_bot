@@ -1,4 +1,4 @@
-import {Events} from 'discord.js';
+import {Events, MessageFlags} from 'discord.js';
 
 export const name = Events.InteractionCreate;
 
