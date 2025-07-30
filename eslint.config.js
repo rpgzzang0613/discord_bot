@@ -22,17 +22,20 @@ export default [
       'no-shadow': ['error', {allow: ['err', 'resolve', 'reject']}],
       'no-undef': 'off',
       'space-before-blocks': 'error',
-      'space-before-function-paren': ['error', {
-        anonymous: 'never',
-        named: 'never',
-        asyncArrow: 'always',
-      }],
+      'space-before-function-paren': [
+        'error',
+        {
+          anonymous: 'never',
+          named: 'never',
+          asyncArrow: 'always',
+        },
+      ],
       'space-in-parens': 'error',
       'space-infix-ops': 'error',
       'space-unary-ops': 'error',
       'spaced-comment': 'error',
       yoda: 'error',
     },
-    prettier,
   },
+  prettier,
 ];

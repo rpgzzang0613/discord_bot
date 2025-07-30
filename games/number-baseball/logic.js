@@ -2,7 +2,9 @@ export function generateSecret() {
   const digits = [];
   while (digits.length < 3) {
     const n = Math.floor(Math.random() * 10).toString();
-    if (!digits.includes(n)) digits.push(n);
+    if (!digits.includes(n)) {
+      digits.push(n);
+    }
   }
   return digits.join('');
 }
@@ -18,8 +20,11 @@ export function getStrikeAndBall(secret, guess) {
   let ball = 0;
 
   for (let i = 0; i < 3; i++) {
-    if (guess[i] === secret[i]) strike++;
-    else if (secret.includes(guess[i])) ball++;
+    if (guess[i] === secret[i]) {
+      strike++;
+    } else if (secret.includes(guess[i])) {
+      ball++;
+    }
   }
 
   return {strike, ball};

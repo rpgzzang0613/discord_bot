@@ -6,7 +6,9 @@ export function beginTurnCycle(client) {
   const player = gameState.players[gameState.turnIndex];
   const channel = client.channels.cache.get(gameState.channelId);
 
-  if (!channel) return;
+  if (!channel) {
+    return;
+  }
 
   channel.send(
     `🎯 ${player.name} 님의 차례입니다. 20초 안에 '/숫자야구 정답 123' 형식으로 답을 입력하세요.`
@@ -41,7 +43,9 @@ export async function handleGuess(interaction, input) {
   await interaction.reply(`${strike} 스트라이크, ${ball} 볼입니다.`);
 
   const channel = interaction.client.channels.cache.get(gameState.channelId);
-  if (channel) advanceTurn(channel);
+  if (channel) {
+    advanceTurn(channel);
+  }
 }
 
 export function advanceTurn(channel) {
