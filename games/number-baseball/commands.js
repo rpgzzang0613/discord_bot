@@ -18,7 +18,9 @@ export async function handleStartCommand(interaction) {
   gameState.turnIndex = 0;
   gameState.round = 1;
 
-  await interaction.reply('숫자야구 게임을 시작합니다! 7초 안에 `/숫자야구 참여`로 참가해 주세요.');
+  await interaction.reply(
+    '숫자야구 게임을 시작합니다! 15초 안에 `/숫자야구 참여`로 참가해 주세요.'
+  );
 
   gameState.joinTimeout = setTimeout(async () => {
     if (gameState.players.length === 0) {
@@ -30,7 +32,7 @@ export async function handleStartCommand(interaction) {
       );
       beginTurnCycle(interaction.client);
     }
-  }, 7000);
+  }, 15000);
 }
 
 export async function handleJoinCommand(interaction) {

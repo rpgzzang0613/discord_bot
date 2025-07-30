@@ -2,8 +2,6 @@ import {gameState, resetGameState} from './state.js';
 import {getStrikeAndBall, isValidGuess} from './logic.js';
 import {MessageFlags} from 'discord.js';
 
-const TURN_TIME_LIMIT = 15_000; // 15초
-
 export function beginTurnCycle(client) {
   const player = gameState.players[gameState.turnIndex];
   const channel = client.channels.cache.get(gameState.channelId);
@@ -11,12 +9,12 @@ export function beginTurnCycle(client) {
   if (!channel) return;
 
   channel.send(
-    `🎯 ${player.name} 님의 차례입니다. 15초 안에 '/숫자야구 정답 123' 형식으로 답을 입력하세요.`
+    `🎯 ${player.name} 님의 차례입니다. 20초 안에 '/숫자야구 정답 123' 형식으로 답을 입력하세요.`
   );
 
   gameState.turnTimeout = setTimeout(() => {
     advanceTurn(channel);
-  }, TURN_TIME_LIMIT);
+  }, 20000);
 }
 
 export async function handleGuess(interaction, input) {
